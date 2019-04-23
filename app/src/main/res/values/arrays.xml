@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tab">
+        <item>动漫</item>
+        <item>唯美</item>
+        <item>手机壁纸</item>
+        <item>美女</item>
+        <item>风景</item>
+        <item>萌宠</item>
+        <item>帅哥</item>
+        <item>旅游胜地</item>
+        <item>电影壁纸</item>
+        <item>游戏壁纸</item>
+    </string-array>
+</resources>
