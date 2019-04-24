@@ -1,24 +1,18 @@
 package com.zqb.mvvmkotlin.ui
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.Utils
 import com.zqb.mvpkotlin.ui.image.ImageItemDecoration
 import com.zqb.mvvmkotlin.R
 import com.zqb.mvvmkotlin.app.TAB_POSITION
 import com.zqb.mvvmkotlin.base.SimpleFragment
+import com.zqb.mvvmkotlin.di.component.DaggerActivityComponent
 import com.zqb.mvvmkotlin.di.component.DaggerAppComponent
 import com.zqb.mvvmkotlin.di.component.DaggerFragmentComponent
+import com.zqb.mvvmkotlin.di.module.ActivityModule
 import com.zqb.mvvmkotlin.model.bean.ImageBean
-import com.zqb.mvvmkotlin.model.net.SougouApi
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_image.*
 import javax.inject.Inject
 
@@ -38,7 +32,11 @@ class ImageFragment : SimpleFragment() {
     @SuppressLint("CheckResult")
     override fun initEventAndData() {
         DaggerFragmentComponent.builder()
-            .appComponent(DaggerAppComponent.builder().build())
+            .activityComponent(
+                DaggerActivityComponent.builder()
+                    .activityModule(ActivityModule(_mActivity))
+                    .appComponent(DaggerAppComponent.builder().build())
+                    .build())
             .build()
             .inject(this)
 
@@ -47,10 +45,16 @@ class ImageFragment : SimpleFragment() {
         mImageAdapter = ImageAdapter(data = ArrayList())
         mImageAdapter.bindToRecyclerView(recycler_view)
 
-        mImageViewModel.loadImage(Utils.getApp().resources.getStringArray(R.array.tab)[arguments?.getInt(TAB_POSITION) ?: 0], 0)
-            .observe(this,
+        mImageAdapter.setOnLoadMoreListener({
+            mImageViewModel.loadMore()
+        }, recycler_view)
+
+        mImageViewModel.loadImage(arguments?.getInt(TAB_POSITION) ?: 0)
+
+        mImageViewModel.liveData.observe(this,
                 Observer<ImageBean> {
                     mImageAdapter.addData(it?.items ?: ArrayList())
+                    mImageAdapter.loadMoreComplete()
                 })
 
     }

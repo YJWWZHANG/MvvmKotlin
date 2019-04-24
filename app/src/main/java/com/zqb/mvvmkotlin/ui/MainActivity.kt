@@ -9,6 +9,7 @@ import com.zqb.mvvmkotlin.R
 import com.zqb.mvvmkotlin.base.SimpleActivity
 import com.zqb.mvvmkotlin.di.component.DaggerActivityComponent
 import com.zqb.mvvmkotlin.di.component.DaggerAppComponent
+import com.zqb.mvvmkotlin.di.module.ActivityModule
 import com.zqb.mvvmkotlin.model.net.SougouApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -32,6 +33,7 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main) : Simple
         view_pager.adapter = TabFragmentAdapter(supportFragmentManager)
         tab_layout.setupWithViewPager(view_pager)
         DaggerActivityComponent.builder()
+            .activityModule(ActivityModule(this))
             .appComponent(DaggerAppComponent.builder().build())
             .build()
             .inject(this)
