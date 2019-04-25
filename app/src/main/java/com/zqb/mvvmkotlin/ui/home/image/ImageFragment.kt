@@ -2,6 +2,7 @@ package com.zqb.mvvmkotlin.ui.home.image
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import com.zqb.mvvmkotlin.R
@@ -25,7 +26,6 @@ class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
     @Inject
     lateinit var mImageViewModel: ImageViewModel
     private lateinit var mImageAdapter: ImageAdapter
-    private var mIsShow = false
 
     override val layoutId: Int
         get() = R.layout.fragment_image
@@ -61,8 +61,8 @@ class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
                     mImageAdapter.addData(it?.items ?: ArrayList())
                     mImageAdapter.loadMoreComplete()
                 })
-
         mImageViewModel.loadImage(arguments?.getInt(TAB_POSITION) ?: 0)
+
     }
 
 }

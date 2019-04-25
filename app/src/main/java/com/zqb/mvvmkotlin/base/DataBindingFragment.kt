@@ -19,10 +19,10 @@ abstract class DataBindingFragment<T : ViewDataBinding> : SimpleFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onLazyInitView(savedInstanceState: Bundle?) {
         initInject()
         bindingViewModel()
-        super.onViewCreated(view, savedInstanceState)
+        super.onLazyInitView(savedInstanceState)
     }
 
     abstract fun initInject()
