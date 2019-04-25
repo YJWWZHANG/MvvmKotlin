@@ -1,4 +1,4 @@
-package com.zqb.mvvmkotlin.ui
+package com.zqb.mvvmkotlin.ui.home.image
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
@@ -31,10 +31,10 @@ class ImageViewModel @Inject constructor(var mSougouApi: SougouApi, var loading:
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-//                loading.show()
+                loading.show()
             }
             .doFinally {
-//                loading.dismiss()
+                loading.dismiss()
             }
             .subscribe({
                 LogUtils.e(it.items.toString())

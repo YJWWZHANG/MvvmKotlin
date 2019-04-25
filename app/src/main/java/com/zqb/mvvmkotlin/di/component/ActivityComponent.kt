@@ -1,6 +1,6 @@
 package com.zqb.mvvmkotlin.di.component
 
-import com.zqb.mvvmkotlin.ui.MainActivity
+import com.zqb.mvvmkotlin.ui.home.MainActivity
 import com.zqb.mvvmkotlin.di.module.ActivityModule
 import com.zqb.mvvmkotlin.di.scope.ActivityScope
 import com.zqb.mvvmkotlin.model.net.SougouApi

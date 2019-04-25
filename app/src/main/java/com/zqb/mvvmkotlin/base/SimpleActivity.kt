@@ -17,7 +17,7 @@ abstract class SimpleActivity : SupportActivity() {
         BackgroundLibrary.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
-
+        onViewCreated()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             getContainer()?.setPadding(
@@ -25,9 +25,7 @@ abstract class SimpleActivity : SupportActivity() {
                 getContainer()?.paddingRight ?: 0, getContainer()?.paddingBottom ?: 0
             )
         }
-
         EventBus.getDefault().register(this)
-        onViewCreated()
         initEventAndData()
     }
 

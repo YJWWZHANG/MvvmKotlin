@@ -1,4 +1,4 @@
-package com.zqb.mvpkotlin.ui.image
+package com.zqb.mvvmkotlin.ui.home.image
 
 import android.graphics.Canvas
 import android.graphics.Color
