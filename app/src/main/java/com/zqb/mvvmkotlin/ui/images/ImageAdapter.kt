@@ -1,4 +1,4 @@
-package com.zqb.mvvmkotlin.ui.home.image
+package com.zqb.mvvmkotlin.ui.images
 
 import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide

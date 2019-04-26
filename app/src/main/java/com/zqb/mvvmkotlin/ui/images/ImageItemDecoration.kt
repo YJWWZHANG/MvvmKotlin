@@ -1,4 +1,4 @@
-package com.zqb.mvvmkotlin.ui.home.image
+package com.zqb.mvvmkotlin.ui.images
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -6,10 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ScreenUtils
 import android.support.v7.widget.StaggeredGridLayoutManager
-import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.utils.AutoSizeUtils
 
 

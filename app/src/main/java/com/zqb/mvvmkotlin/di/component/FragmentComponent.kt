@@ -1,6 +1,6 @@
 package com.zqb.mvvmkotlin.di.component
 
-import com.zqb.mvvmkotlin.ui.home.image.ImageFragment
+import com.zqb.mvvmkotlin.ui.images.ImageFragment
 import com.zqb.mvvmkotlin.di.module.FragmentModule
 import com.zqb.mvvmkotlin.di.scope.FragmentScope
 import dagger.Component

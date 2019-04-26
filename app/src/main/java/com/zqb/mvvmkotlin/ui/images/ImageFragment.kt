@@ -1,8 +1,6 @@
-package com.zqb.mvvmkotlin.ui.home.image
+package com.zqb.mvvmkotlin.ui.images
 
-import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
-import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.ToastUtils
@@ -10,15 +8,13 @@ import com.zqb.mvvmkotlin.R
 import com.zqb.mvvmkotlin.app.REFRESH
 import com.zqb.mvvmkotlin.app.TAB_POSITION
 import com.zqb.mvvmkotlin.base.DataBindingFragment
-import com.zqb.mvvmkotlin.base.SimpleFragment
 import com.zqb.mvvmkotlin.databinding.FragmentImageBinding
 import com.zqb.mvvmkotlin.di.component.DaggerActivityComponent
 import com.zqb.mvvmkotlin.di.component.DaggerAppComponent
 import com.zqb.mvvmkotlin.di.component.DaggerFragmentComponent
 import com.zqb.mvvmkotlin.di.module.ActivityModule
-import com.zqb.mvvmkotlin.model.bean.ImageBean
-import com.zqb.mvvmkotlin.model.bean.Resource
 import com.zqb.mvvmkotlin.model.enum.Status
+import com.zqb.mvvmkotlin.ui.details.LargeImgActivity
 import kotlinx.android.synthetic.main.fragment_image.*
 import javax.inject.Inject
 
@@ -59,6 +55,9 @@ class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
     }
 
     override fun initEvent() {
+        mImageAdapter.setOnItemClickListener { adapter, view, position ->
+            LargeImgActivity.launch(_mActivity)
+        }
         mImageAdapter.setOnLoadMoreListener({
             mImageViewModel.loadMore()
         }, recycler_view)

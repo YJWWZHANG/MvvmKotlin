@@ -1,4 +1,4 @@
-package com.zqb.mvvmkotlin.ui.home.image
+package com.zqb.mvvmkotlin.ui.images
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
