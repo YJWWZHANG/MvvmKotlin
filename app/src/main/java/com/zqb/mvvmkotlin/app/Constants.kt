@@ -5,3 +5,5 @@ package com.zqb.mvvmkotlin.app
  */
 
 var TAB_POSITION = "tab_position"
+
+var REFRESH = "refresh"

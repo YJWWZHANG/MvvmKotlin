@@ -5,7 +5,9 @@ import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
+import com.blankj.utilcode.util.ToastUtils
 import com.zqb.mvvmkotlin.R
+import com.zqb.mvvmkotlin.app.REFRESH
 import com.zqb.mvvmkotlin.app.TAB_POSITION
 import com.zqb.mvvmkotlin.base.DataBindingFragment
 import com.zqb.mvvmkotlin.base.SimpleFragment
@@ -15,6 +17,8 @@ import com.zqb.mvvmkotlin.di.component.DaggerAppComponent
 import com.zqb.mvvmkotlin.di.component.DaggerFragmentComponent
 import com.zqb.mvvmkotlin.di.module.ActivityModule
 import com.zqb.mvvmkotlin.model.bean.ImageBean
+import com.zqb.mvvmkotlin.model.bean.Resource
+import com.zqb.mvvmkotlin.model.enum.Status
 import kotlinx.android.synthetic.main.fragment_image.*
 import javax.inject.Inject
 
@@ -45,24 +49,42 @@ class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
         viewDataBinding.viewmodel = mImageViewModel
     }
 
-    @SuppressLint("CheckResult")
-    override fun initEventAndData() {
+    override fun initView() {
         recycler_view.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         recycler_view.addItemDecoration(ImageItemDecoration())
         mImageAdapter = ImageAdapter(data = ArrayList())
         mImageAdapter.bindToRecyclerView(recycler_view)
 
+        mImageViewModel.loadImage(arguments?.getInt(TAB_POSITION) ?: 0)
+    }
+
+    override fun initEvent() {
         mImageAdapter.setOnLoadMoreListener({
             mImageViewModel.loadMore()
         }, recycler_view)
-
+        swipe_refresh.setOnRefreshListener {
+            mImageViewModel.refresh()
+        }
         mImageViewModel.liveData.observe(this,
-                Observer<ImageBean> {
-                    mImageAdapter.addData(it?.items ?: ArrayList())
-                    mImageAdapter.loadMoreComplete()
-                })
-        mImageViewModel.loadImage(arguments?.getInt(TAB_POSITION) ?: 0)
-
+            Observer {
+                when(it?.status) {
+                    Status.SUCCESS -> {
+                        swipe_refresh.isRefreshing = false
+                        if (it.message == REFRESH) {
+                            mImageAdapter.setNewData(it.data)
+                        } else {
+                            mImageAdapter.addData(it.data ?: ArrayList())
+                            mImageAdapter.loadMoreComplete()
+                        }
+                    }
+                    Status.ERROR -> {
+                        swipe_refresh.isRefreshing = false
+                        mImageAdapter.loadMoreFail()
+                        ToastUtils.showShort(it.message)
+                    }
+                    Status.LOADING -> {}
+                }
+            })
     }
 
 }

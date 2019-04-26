@@ -26,7 +26,8 @@ abstract class SimpleActivity : SupportActivity() {
             )
         }
         EventBus.getDefault().register(this)
-        initEventAndData()
+        initView()
+        initEvent()
     }
 
     override fun onDestroy() {
@@ -38,7 +39,8 @@ abstract class SimpleActivity : SupportActivity() {
     }
 
     protected abstract val layoutId: Int
-    abstract fun initEventAndData()
+    protected abstract fun initView()
+    protected abstract fun initEvent()
 
     protected open fun getContainer(): ViewGroup? {
         return null

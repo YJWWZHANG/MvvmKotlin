@@ -1,13 +1,13 @@
 package com.zqb.mvvmkotlin.ui.home.image
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.zqb.mvvmkotlin.R
+import com.zqb.mvvmkotlin.app.REFRESH
 import com.zqb.mvvmkotlin.model.bean.ImageBean
+import com.zqb.mvvmkotlin.model.bean.Resource
 import com.zqb.mvvmkotlin.model.net.SougouApi
 import com.zqb.mvvmkotlin.widgets.Loading
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,7 +19,7 @@ import javax.inject.Inject
  */
 class ImageViewModel @Inject constructor(var mSougouApi: SougouApi, var loading: Loading) : ViewModel() {
 
-    var liveData  = MutableLiveData<ImageBean>()
+    var liveData  = MutableLiveData<Resource<ArrayList<ImageBean.Item>>>()
 
     private var mCurrentPage = 0
     private var mQuery = ""
@@ -37,10 +37,9 @@ class ImageViewModel @Inject constructor(var mSougouApi: SougouApi, var loading:
                 loading.dismiss()
             }
             .subscribe({
-                LogUtils.e(it.items.toString())
-                liveData.value = it
+                liveData.value = Resource.success(it.items)
             }, {
-                LogUtils.e(it.message)
+                liveData.value = Resource.error(it.message)
             }, {
 
             })
@@ -48,20 +47,36 @@ class ImageViewModel @Inject constructor(var mSougouApi: SougouApi, var loading:
 
     @SuppressLint("CheckResult")
     fun loadMore() {
-        mCurrentPage++
+        mCurrentPage += 48
         mSougouApi.loadImage(mQuery, mCurrentPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {}
             .doFinally {}
             .subscribe({
-                LogUtils.e(it.items.toString())
-                liveData.value = it
+                liveData.value = Resource.success(it.items)
             }, {
-                LogUtils.e(it.message)
+                liveData.value = Resource.error(it.message)
             }, {
 
             })
 
+    }
+
+    @SuppressLint("CheckResult")
+    fun refresh() {
+        mCurrentPage = 0
+        mSougouApi.loadImage(mQuery, mCurrentPage)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {}
+            .doFinally {}
+            .subscribe({
+                liveData.value = Resource.success(it.items, REFRESH)
+            }, {
+                liveData.value = Resource.error(it.message)
+            }, {
+
+            })
     }
 }

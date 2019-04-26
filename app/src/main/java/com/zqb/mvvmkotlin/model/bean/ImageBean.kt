@@ -11,7 +11,7 @@ data class ImageBean(
     val isPornQuery: Int,
     val isQcResult: String,
     val isTinyQcNull: Boolean,
-    val items: List<Item>,
+    val items: ArrayList<Item>,
     val itemsOnPage: Int,
     val maxEnd: Int,
     val query: String,

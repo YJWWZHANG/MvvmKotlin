@@ -36,10 +36,13 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main) : DataBi
         return title_bar
     }
 
-    @SuppressLint("CheckResult")
-    override fun initEventAndData() {
+    override fun initView() {
         view_pager.adapter = TabFragmentAdapter(supportFragmentManager)
         tab_layout.setupWithViewPager(view_pager)
+    }
+
+    override fun initEvent() {
+
     }
 
     override fun onBackPressedSupport() {

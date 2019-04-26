@@ -20,7 +20,8 @@ abstract class SimpleFragment : SupportFragment() {
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
         EventBus.getDefault().register(this)
-        initEventAndData()
+        initView()
+        initEvent()
     }
 
     override fun onDestroyView() {
@@ -28,7 +29,8 @@ abstract class SimpleFragment : SupportFragment() {
         EventBus.getDefault().unregister(this)
     }
 
-    protected abstract fun initEventAndData()
+    protected abstract fun initView()
+    protected abstract fun initEvent()
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageNothingEvent(s: String) {
