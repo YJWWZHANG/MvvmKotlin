@@ -92,7 +92,7 @@ class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
                             mImageAdapter.loadMoreComplete()
                         }
                         it.data?.forEach { item ->
-                            mImages.add(item.thumbUrl)
+                            mImages.add(item.pic_url)
                         }
                     }
                     Status.ERROR -> {
