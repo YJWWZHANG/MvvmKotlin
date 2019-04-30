@@ -18,6 +18,9 @@ class ImageAdapter(layoutResId: Int = R.layout.item_image, data: List<ImageBean.
     override fun convert(helper: BaseViewHolder, item: ImageBean.Item) {
 //        LogUtils.e(item.toString())
         helper.itemView.iv_pic.layoutParams.height = (item.height.toFloat() / item.width.toFloat() * (ScreenUtils.getScreenWidth() / 2 - AutoSizeUtils.dp2px(helper.itemView.context, 2f))).toInt()
-        Glide.with(helper.itemView.context).load(item.thumbUrl).into(helper.itemView.iv_pic)
+        Glide.with(helper.itemView.context)
+            .load(item.thumbUrl)
+            .placeholder(R.mipmap.ic_loading)
+            .into(helper.itemView.iv_pic)
     }
 }
