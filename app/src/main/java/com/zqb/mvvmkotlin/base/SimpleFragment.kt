@@ -17,8 +17,8 @@ abstract class SimpleFragment : SupportFragment() {
         return inflater.inflate(layoutId, null)
     }
 
-    override fun onLazyInitView(savedInstanceState: Bundle?) {
-        super.onLazyInitView(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         EventBus.getDefault().register(this)
         initView()
         initEvent()

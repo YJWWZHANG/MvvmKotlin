@@ -1,6 +1,7 @@
 package com.zqb.mvvmkotlin.ui.images
 
 import android.arch.lifecycle.Observer
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import com.SuperKotlin.pictureviewer.ImagePagerActivity
@@ -55,8 +56,6 @@ class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
         recycler_view.addItemDecoration(ImageItemDecoration())
         mImageAdapter = ImageAdapter(data = ArrayList())
         mImageAdapter.bindToRecyclerView(recycler_view)
-
-        mImageViewModel.loadImage(arguments?.getInt(TAB_POSITION) ?: 0)
     }
 
     override fun initEvent() {
@@ -103,6 +102,11 @@ class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
                     Status.LOADING -> {}
                 }
             })
+    }
+
+    override fun onLazyInitView(savedInstanceState: Bundle?) {
+        super.onLazyInitView(savedInstanceState)
+        mImageViewModel.loadImage(arguments?.getInt(TAB_POSITION) ?: 0)
     }
 
 }
