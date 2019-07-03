@@ -8,14 +8,12 @@ import com.SuperKotlin.pictureviewer.ImagePagerActivity
 import com.blankj.utilcode.util.ToastUtils
 import com.zqb.mvvmkotlin.app.REFRESH
 import com.zqb.mvvmkotlin.app.TAB_POSITION
-import com.zqb.mvvmkotlin.base.DataBindingFragment
-import com.zqb.mvvmkotlin.databinding.FragmentImageBinding
+import com.zqb.mvvmkotlin.base.BaseFragment
 import com.zqb.mvvmkotlin.di.component.DaggerActivityComponent
 import com.zqb.mvvmkotlin.di.component.DaggerAppComponent
 import com.zqb.mvvmkotlin.di.component.DaggerFragmentComponent
 import com.zqb.mvvmkotlin.di.module.ActivityModule
 import com.zqb.mvvmkotlin.model.enum.Status
-import com.zqb.mvvmkotlin.ui.details.LargeImgActivity
 import kotlinx.android.synthetic.main.fragment_image.*
 import javax.inject.Inject
 import com.SuperKotlin.pictureviewer.PictureConfig
@@ -25,7 +23,7 @@ import com.zqb.mvvmkotlin.R
 /**
  *创建时间:2019/4/17 16:24
  */
-class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
+class ImageFragment : BaseFragment() {
 
     @Inject
     lateinit var mImageViewModel: ImageViewModel
@@ -45,10 +43,6 @@ class ImageFragment : DataBindingFragment<FragmentImageBinding>() {
                     .build())
             .build()
             .inject(this)
-    }
-
-    override fun bindingViewModel() {
-        viewDataBinding.viewmodel = mImageViewModel
     }
 
     override fun initView() {
