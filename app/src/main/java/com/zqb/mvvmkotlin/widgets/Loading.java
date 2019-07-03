@@ -3,8 +3,8 @@ package com.zqb.mvvmkotlin.widgets;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.zqb.mvvmkotlin.R;
 
 public class Loading extends Dialog {

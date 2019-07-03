@@ -1,6 +1,6 @@
 package com.zqb.mvvmkotlin.ui.home
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
 /**

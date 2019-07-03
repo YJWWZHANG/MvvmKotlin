@@ -1,10 +1,10 @@
 package com.zqb.mvvmkotlin.ui.home
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
 import com.blankj.utilcode.util.Utils
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.zqb.mvvmkotlin.ui.images.ImageFragment
 import com.zqb.mvvmkotlin.R
 import com.zqb.mvvmkotlin.app.TAB_POSITION

@@ -1,9 +1,9 @@
 package com.zqb.mvvmkotlin.ui.images
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.SuperKotlin.pictureviewer.ImagePagerActivity
 import com.blankj.utilcode.util.ToastUtils
 import com.zqb.mvvmkotlin.app.REFRESH

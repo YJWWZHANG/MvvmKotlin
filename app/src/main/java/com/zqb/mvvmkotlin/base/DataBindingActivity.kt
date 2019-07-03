@@ -1,7 +1,7 @@
 package com.zqb.mvvmkotlin.base
 
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 
 /**
  *创建时间:2019/4/25 09:58

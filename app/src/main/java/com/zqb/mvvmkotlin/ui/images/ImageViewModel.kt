@@ -1,8 +1,8 @@
 package com.zqb.mvvmkotlin.ui.images
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.blankj.utilcode.util.Utils
 import com.zqb.mvvmkotlin.R
 import com.zqb.mvvmkotlin.app.REFRESH
