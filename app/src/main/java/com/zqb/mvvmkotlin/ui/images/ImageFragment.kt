@@ -5,19 +5,15 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.SuperKotlin.pictureviewer.ImagePagerActivity
+import com.SuperKotlin.pictureviewer.PictureConfig
 import com.blankj.utilcode.util.ToastUtils
+import com.zqb.mvvmkotlin.R
 import com.zqb.mvvmkotlin.app.REFRESH
 import com.zqb.mvvmkotlin.app.TAB_POSITION
 import com.zqb.mvvmkotlin.base.BaseFragment
-import com.zqb.mvvmkotlin.di.component.DaggerActivityComponent
-import com.zqb.mvvmkotlin.di.component.DaggerAppComponent
-import com.zqb.mvvmkotlin.di.component.DaggerFragmentComponent
-import com.zqb.mvvmkotlin.di.module.ActivityModule
 import com.zqb.mvvmkotlin.model.enum.Status
 import kotlinx.android.synthetic.main.fragment_image.*
-import javax.inject.Inject
-import com.SuperKotlin.pictureviewer.PictureConfig
-import com.zqb.mvvmkotlin.R
+import org.kodein.di.generic.instance
 
 
 /**
@@ -25,9 +21,9 @@ import com.zqb.mvvmkotlin.R
  */
 class ImageFragment : BaseFragment() {
 
-    @Inject
-    lateinit var mImageViewModel: ImageViewModel
     private lateinit var mImageAdapter: ImageAdapter
+
+    private val mImageViewModel: ImageViewModel by instance()
 
     private var mImages = arrayListOf<String>()
 
@@ -35,14 +31,6 @@ class ImageFragment : BaseFragment() {
         get() = R.layout.fragment_image
 
     override fun initInject() {
-        DaggerFragmentComponent.builder()
-            .activityComponent(
-                DaggerActivityComponent.builder()
-                    .activityModule(ActivityModule(_mActivity))
-                    .appComponent(DaggerAppComponent.builder().build())
-                    .build())
-            .build()
-            .inject(this)
     }
 
     override fun initView() {

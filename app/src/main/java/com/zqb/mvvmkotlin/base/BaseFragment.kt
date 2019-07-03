@@ -1,18 +1,24 @@
 package com.zqb.mvvmkotlin.base
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import com.zqb.mvvmkotlin.di.imageKodeinModule
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
 
 /**
  *创建时间:2019/4/25 10:39
  */
-abstract class BaseFragment: SimpleFragment() {
+abstract class BaseFragment : SimpleFragment(), KodeinAware {
 
+    private val parentKodein by closestKodein()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override val kodein: Kodein = Kodein.lazy {
+        extend(parentKodein)
+//        bind<Activity>() with instance(_mActivity)
+//        import(uiKodeinModule)
+        import(imageKodeinModule)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
