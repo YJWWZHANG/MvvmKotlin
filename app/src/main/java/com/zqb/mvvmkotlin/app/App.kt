@@ -2,7 +2,9 @@ package com.zqb.mvvmkotlin.app
 
 import android.app.Application
 import android.content.Context
+import androidx.multidex.MultiDex
 import com.blankj.utilcode.util.Utils
+import com.squareup.leakcanary.LeakCanary
 import com.zqb.mvvmkotlin.di.netKodeinModule
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -19,8 +21,14 @@ class App: Application(), KodeinAware {
         import(netKodeinModule)
     }
 
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
         Utils.init(this)
+        LeakCanary.install(this)
     }
 }
