@@ -12,12 +12,11 @@ import com.zqb.mvvmkotlin.model.net.SougouApi
 import com.zqb.mvvmkotlin.widgets.Loading
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 /**
  *创建时间:2019/4/23 20:03
  */
-class ImageViewModel @Inject constructor(var mSougouApi: SougouApi, var loading: Loading) : ViewModel() {
+class ImageViewModel constructor(var mSougouApi: SougouApi, var loading: Loading) : ViewModel() {
 
     var liveData  = MutableLiveData<Resource<ArrayList<ImageBean.Item>>>()
 
