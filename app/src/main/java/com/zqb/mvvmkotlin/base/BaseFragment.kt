@@ -10,7 +10,7 @@ import org.kodein.di.android.x.closestKodein
 /**
  *创建时间:2019/4/25 10:39
  */
-abstract class BaseFragment : SimpleFragment(), KodeinAware {
+abstract class BaseFragment : AutoDisposeFragment(), KodeinAware {
 
     private val parentKodein by closestKodein()
 
