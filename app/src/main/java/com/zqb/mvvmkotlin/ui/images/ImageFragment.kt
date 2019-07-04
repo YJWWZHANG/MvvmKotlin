@@ -13,6 +13,7 @@ import com.zqb.mvvmkotlin.app.TAB_POSITION
 import com.zqb.mvvmkotlin.base.BaseFragment
 import com.zqb.mvvmkotlin.model.enum.Status
 import kotlinx.android.synthetic.main.fragment_image.*
+import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 
 
@@ -30,7 +31,8 @@ class ImageFragment : BaseFragment() {
     override val layoutId: Int
         get() = R.layout.fragment_image
 
-    override fun initInject() {
+    override fun importModule(mainBuilder: Kodein.MainBuilder) {
+        mainBuilder.import(imageKodeinModule)
     }
 
     override fun initView() {

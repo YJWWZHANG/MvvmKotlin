@@ -1,10 +1,10 @@
 package com.zqb.mvvmkotlin.ui.images
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
-import com.chad.library.adapter.base.BaseViewHolder
 import com.uber.autodispose.autoDisposable
 import com.zqb.mvvmkotlin.R
 import com.zqb.mvvmkotlin.app.REFRESH
@@ -12,6 +12,7 @@ import com.zqb.mvvmkotlin.base.BaseViewModel
 import com.zqb.mvvmkotlin.model.bean.ImageBean
 import com.zqb.mvvmkotlin.model.bean.Resource
 import com.zqb.mvvmkotlin.model.net.SougouApi
+import com.zqb.mvvmkotlin.utils.SingletonHolderSingleArg
 import com.zqb.mvvmkotlin.widgets.Loading
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -52,8 +53,6 @@ class ImageViewModel constructor(var mSougouApi: SougouApi, var loading: Loading
         mSougouApi.loadImage(mQuery, mCurrentPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe {}
-            .doFinally {}
             .autoDisposable(this)
             .subscribe({
                 liveData.value = Resource.success(it.items)
@@ -70,8 +69,6 @@ class ImageViewModel constructor(var mSougouApi: SougouApi, var loading: Loading
         mSougouApi.loadImage(mQuery, mCurrentPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe {}
-            .doFinally {}
             .autoDisposable(this)
             .subscribe({
                 liveData.value = Resource.success(it.items, REFRESH)
@@ -81,4 +78,15 @@ class ImageViewModel constructor(var mSougouApi: SougouApi, var loading: Loading
 
             })
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+class ImageViewModelFactory(
+    private val repo: SougouApi, private val loading: Loading
+) : ViewModelProvider.Factory {
+
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
+        ImageViewModel(repo, loading) as T
+
+    companion object : SingletonHolderSingleArg<ImageViewModelFactory, SougouApi, Loading>(::ImageViewModelFactory)
 }

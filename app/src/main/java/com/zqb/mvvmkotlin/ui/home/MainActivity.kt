@@ -12,9 +12,6 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main) : BaseAc
 
     private var mExitTime = 0L
 
-    override fun initInject() {
-    }
-
     override fun getContainer(): ViewGroup? {
         return title_bar
     }

@@ -47,8 +47,10 @@ val netKodeinModule = Kodein.Module(NET_MODULE_TAG) {
 
     bind<OkHttpClient>() with singleton {
         OkHttpClient.Builder().apply {
-            addInterceptor(instance(INTERCEPTOR_LOG_TAG))
-            addInterceptor(instance(INTERCEPTOR_CHUCK_TAG))
+            if (BuildConfig.DEBUG) {
+                addInterceptor(instance(INTERCEPTOR_LOG_TAG))
+                addInterceptor(instance(INTERCEPTOR_CHUCK_TAG))
+            }
             connectTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             readTimeout(TIME_OUT_SECONDS.toLong(), TimeUnit.SECONDS)
             addNetworkInterceptor { chain ->

@@ -1,7 +1,10 @@
-package com.zqb.mvvmkotlin.di
+package com.zqb.mvvmkotlin.ui.images
 
+import android.app.Activity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
 import com.zqb.mvvmkotlin.model.net.SougouApi
-import com.zqb.mvvmkotlin.ui.images.ImageViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -17,6 +20,8 @@ val imageKodeinModule = Kodein.Module(IMAGE_MODULE_TAG) {
     }
 
     bind<ImageViewModel>() with singleton {
-        ImageViewModel(instance(), instance())
+        ViewModelProviders
+            .of(context as Fragment, ImageViewModelFactory.getInstance(instance(), instance()))
+            .get(ImageViewModel::class.java)
     }
 }
