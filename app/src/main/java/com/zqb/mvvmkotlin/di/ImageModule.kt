@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.zqb.mvvmkotlin.model.net.SougouApi
+import com.zqb.mvvmkotlin.ui.images.ImageModelFactory
 import com.zqb.mvvmkotlin.ui.images.ImageViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -22,11 +23,7 @@ val imageKodeinModule = Kodein.Module(IMAGE_MODULE_TAG) {
 
     bind<ImageViewModel>() with singleton {
         ViewModelProviders
-            .of(context as Fragment, object : ViewModelProvider.Factory {
-                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return ImageViewModel(instance(), instance()) as T
-                }
-            })
+            .of(context as Fragment, ImageModelFactory(instance(), instance()))
             .get(ImageViewModel::class.java)
     }
 }
