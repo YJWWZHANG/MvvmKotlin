@@ -20,7 +20,7 @@ abstract class SimpleFragment : SupportFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         EventBus.getDefault().register(this)
-        initView()
+        initDataAndView()
         initEvent()
     }
 
@@ -29,7 +29,7 @@ abstract class SimpleFragment : SupportFragment() {
         EventBus.getDefault().unregister(this)
     }
 
-    protected abstract fun initView()
+    protected abstract fun initDataAndView()
     protected abstract fun initEvent()
 
     @Subscribe(threadMode = ThreadMode.MAIN)

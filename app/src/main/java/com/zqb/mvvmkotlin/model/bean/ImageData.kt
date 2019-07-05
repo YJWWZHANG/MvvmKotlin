@@ -3,7 +3,7 @@ package com.zqb.mvvmkotlin.model.bean
 /**
  *创建时间:2019/4/17 18:34
  */
-data class ImageBean(
+data class ImageData(
     val globalQC: Any,
     val hintWords: List<String>,
     val isClusterfilter: Boolean,

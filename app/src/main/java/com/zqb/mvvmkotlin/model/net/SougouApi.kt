@@ -1,6 +1,6 @@
 package com.zqb.mvvmkotlin.model.net
 
-import com.zqb.mvvmkotlin.model.bean.ImageBean
+import com.zqb.mvvmkotlin.model.bean.ImageData
 import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,6 +13,6 @@ interface SougouApi {
         @Query("start") start: Int,
         @Query("reqType") reqType: String = "ajax",
         @Query("reqFrom") reqFrom: String = "result"
-    ): Flowable<ImageBean>
+    ): Flowable<ImageData>
 
 }
