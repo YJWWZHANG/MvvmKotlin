@@ -8,11 +8,9 @@ import com.SuperKotlin.pictureviewer.ImagePagerActivity
 import com.SuperKotlin.pictureviewer.PictureConfig
 import com.blankj.utilcode.util.ToastUtils
 import com.zqb.mvvmkotlin.R
-import com.zqb.mvvmkotlin.app.REFRESH
 import com.zqb.mvvmkotlin.app.TAB_POSITION
 import com.zqb.mvvmkotlin.base.BaseFragment
 import com.zqb.mvvmkotlin.di.imageKodeinModule
-import com.zqb.mvvmkotlin.model.enum.Status
 import kotlinx.android.synthetic.main.fragment_image.*
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
@@ -58,37 +56,34 @@ class ImageFragment : BaseFragment() {
             mImageViewModel.loadMore()
         }, recycler_view)
         swipe_refresh.setOnRefreshListener {
-            mImageViewModel.refresh()
+            mImageViewModel.load(arguments?.getInt(TAB_POSITION) ?: 0)
         }
-        mImageViewModel.liveData.observe(this,
-            Observer {
-                when(it?.status) {
-                    Status.SUCCESS -> {
-                        swipe_refresh.isRefreshing = false
-                        if (it.message == REFRESH) {
-                            mImageAdapter.setNewData(it.data)
-                            mImages.clear()
-                        } else {
-                            mImageAdapter.addData(it.data ?: ArrayList())
-                            mImageAdapter.loadMoreComplete()
-                        }
-                        it.data?.forEach { item ->
-                            mImages.add(item.pic_url)
-                        }
-                    }
-                    Status.ERROR -> {
-                        swipe_refresh.isRefreshing = false
-                        mImageAdapter.loadMoreFail()
-                        ToastUtils.showShort(it.message)
-                    }
-                    Status.LOADING -> {}
-                }
-            })
+
+        mImageViewModel.liveLoad.observe(this, Observer {
+            swipe_refresh.isRefreshing = false
+            mImages.clear()
+            mImageAdapter.setNewData(it)
+            it.forEach { item ->
+                mImages.add(item.pic_url)
+            }
+        })
+        mImageViewModel.liveLoadMore.observe(this, Observer {
+            mImageAdapter.apply {
+                addData(it)
+                loadMoreComplete()
+            }
+            it.forEach { item ->
+                mImages.add(item.pic_url)
+            }
+        })
+        mImageViewModel.liveError.observe(this, Observer {
+            ToastUtils.showShort(it.message)
+        })
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
-        mImageViewModel.loadImage(arguments?.getInt(TAB_POSITION) ?: 0)
+        mImageViewModel.load(arguments?.getInt(TAB_POSITION) ?: 0)
     }
 
 }

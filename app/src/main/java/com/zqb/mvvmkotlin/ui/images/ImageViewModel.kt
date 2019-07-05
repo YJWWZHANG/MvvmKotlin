@@ -1,15 +1,11 @@
 package com.zqb.mvvmkotlin.ui.images
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.Utils
 import com.uber.autodispose.autoDisposable
 import com.zqb.mvvmkotlin.R
-import com.zqb.mvvmkotlin.app.REFRESH
 import com.zqb.mvvmkotlin.base.BaseViewModel
 import com.zqb.mvvmkotlin.model.bean.ImageData
-import com.zqb.mvvmkotlin.model.bean.Resource
 import com.zqb.mvvmkotlin.model.net.SougouApi
 import com.zqb.mvvmkotlin.utils.RxSchedulers
 import com.zqb.mvvmkotlin.widgets.Loading
@@ -19,13 +15,16 @@ import com.zqb.mvvmkotlin.widgets.Loading
  */
 class ImageViewModel constructor(var mSougouApi: SougouApi, var loading: Loading) : BaseViewModel() {
 
-    var liveData  = MutableLiveData<Resource<ArrayList<ImageData.Item>>>()
+    var liveLoad  = MutableLiveData<ArrayList<ImageData.Item>>()
+    var liveLoadMore  = MutableLiveData<ArrayList<ImageData.Item>>()
+    var liveError  = MutableLiveData<Throwable>()
 
     private var mCurrentPage = 0
     private var mQuery = ""
 
-    fun loadImage(position: Int){
+    fun load(position: Int){
         mQuery = Utils.getApp().resources.getStringArray(R.array.tab)[position]
+        mCurrentPage = 0
         mSougouApi.loadImage(mQuery, mCurrentPage)
             .subscribeOn(RxSchedulers.io)
             .observeOn(RxSchedulers.ui)
@@ -37,11 +36,9 @@ class ImageViewModel constructor(var mSougouApi: SougouApi, var loading: Loading
             }
             .autoDisposable(this)
             .subscribe({
-                liveData.value = Resource.success(it.items)
+                liveLoad.value = it.items
             }, {
-                liveData.value = Resource.error(it.message)
-            }, {
-
+                liveError.value = it
             })
     }
 
@@ -52,28 +49,12 @@ class ImageViewModel constructor(var mSougouApi: SougouApi, var loading: Loading
             .observeOn(RxSchedulers.ui)
             .autoDisposable(this)
             .subscribe({
-                liveData.value = Resource.success(it.items)
+                liveLoadMore.value = it.items
             }, {
-                liveData.value = Resource.error(it.message)
-            }, {
-
+                liveError.value = it
             })
 
     }
 
-    fun refresh() {
-        mCurrentPage = 0
-        mSougouApi.loadImage(mQuery, mCurrentPage)
-            .subscribeOn(RxSchedulers.io)
-            .observeOn(RxSchedulers.ui)
-            .autoDisposable(this)
-            .subscribe({
-                liveData.value = Resource.success(it.items, REFRESH)
-            }, {
-                liveData.value = Resource.error(it.message)
-            }, {
-
-            })
-    }
 }
 
